@@ -57,7 +57,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/package.json`:
   "devDependencies": {
     "@playwright/test": "^1.47.0",
     "esbuild": "^0.23.0",
-    "gsap": "^3.12.5"
+    "gsap": "^3.13.0"
   }
 }
 ```
@@ -359,9 +359,9 @@ Write to `/Users/adrienolinger/Claude/motion-kit/demo/index.html`:
     .spacer { height: 80vh; }
     img { max-width: 100%; display: block; }
   </style>
-  <script src="https://unpkg.com/gsap@3.12/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3.12/dist/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/gsap@3.12/dist/SplitText.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.13/dist/SplitText.min.js"></script>
 </head>
 <body>
   <header class="section">
@@ -3022,9 +3022,9 @@ Requires Business plan or higher (for Code Injection) and Squarespace 7.1.
 2. Paste:
 
 ```html
-<script src="https://unpkg.com/gsap@3.12/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3.12/dist/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/gsap@3.12/dist/SplitText.min.js"></script>
+<script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/gsap@3.13/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/<your-handle>/motion-kit@v1.0.0/dist/motion-kit.min.js"></script>
 ```
 
