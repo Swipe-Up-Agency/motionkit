@@ -230,7 +230,7 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:5173',
   },
   webServer: {
-    command: 'python3 -m http.server 5173 --directory tests/fixtures',
+    command: 'python3 -m http.server 5173',
     port: 5173,
     reuseExistingServer: true,
     timeout: 5_000,
@@ -295,13 +295,13 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/smoke.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('MotionKit global is exposed', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const version = await page.evaluate(() => window.MotionKit?.version);
   expect(version).toBe('0.1.0');
 });
 
 test('GSAP and ScrollTrigger are loaded', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const hasGsap = await page.evaluate(() => typeof window.gsap === 'object');
   const hasST = await page.evaluate(() => typeof window.ScrollTrigger === 'function');
   expect(hasGsap).toBe(true);
@@ -309,7 +309,7 @@ test('GSAP and ScrollTrigger are loaded', async ({ page }) => {
 });
 
 test('mkBuild helper creates elements safely', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const id = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ id: 'test', className: 'foo', text: 'hello' });
@@ -408,19 +408,19 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-tokens.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('duration tokens', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals?.tokens?.DURATION);
   expect(r).toEqual({ fast: 300, base: 700, slow: 1200 });
 });
 
 test('delay tokens cover 100–800ms', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals?.tokens?.DELAY);
   expect(r).toEqual({ 100: 100, 200: 200, 300: 300, 400: 400, 500: 500, 600: 600, 700: 700, 800: 800 });
 });
 
 test('easing tokens include base and dramatic', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const e = await page.evaluate(() => window.MotionKit._internals?.tokens?.EASING);
   expect(e.base).toBe('power2.out');
   expect(e.dramatic).toBe('expo.out');
@@ -489,7 +489,7 @@ import { test, expect } from '@playwright/test';
 test('returns false when OS prefers no-preference', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.reducedMotion.isReducedMotion('auto'));
   expect(r).toBe(false);
   await ctx.close();
@@ -498,7 +498,7 @@ test('returns false when OS prefers no-preference', async ({ browser }) => {
 test('returns true when OS prefers reduce and config is auto', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.reducedMotion.isReducedMotion('auto'));
   expect(r).toBe(true);
   await ctx.close();
@@ -507,7 +507,7 @@ test('returns true when OS prefers reduce and config is auto', async ({ browser 
 test('returns true when config is always', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'no-preference' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.reducedMotion.isReducedMotion('always'));
   expect(r).toBe(true);
   await ctx.close();
@@ -516,7 +516,7 @@ test('returns true when config is always', async ({ browser }) => {
 test('returns false when config is never even if OS prefers reduce', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.reducedMotion.isReducedMotion('never'));
   expect(r).toBe(false);
   await ctx.close();
@@ -588,7 +588,7 @@ import { test, expect } from '@playwright/test';
 test('isMobile at 375px with 768 breakpoint', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.breakpoints.isMobile(768));
   expect(r).toBe(true);
   await ctx.close();
@@ -597,14 +597,14 @@ test('isMobile at 375px with 768 breakpoint', async ({ browser }) => {
 test('isMobile at 1280px with 768 breakpoint', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => window.MotionKit._internals.breakpoints.isMobile(768));
   expect(r).toBe(false);
   await ctx.close();
 });
 
 test('resolveMobileBehavior: run default on mobile', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() =>
     window.MotionKit._internals.breakpoints.resolveMobileBehavior({
       mobileDefault: 'run', isMobile: true, override: null,
@@ -613,7 +613,7 @@ test('resolveMobileBehavior: run default on mobile', async ({ page }) => {
 });
 
 test('resolveMobileBehavior: disable default on mobile', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() =>
     window.MotionKit._internals.breakpoints.resolveMobileBehavior({
       mobileDefault: 'disable', isMobile: true, override: null,
@@ -622,7 +622,7 @@ test('resolveMobileBehavior: disable default on mobile', async ({ page }) => {
 });
 
 test('resolveMobileBehavior: on override beats disable default', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() =>
     window.MotionKit._internals.breakpoints.resolveMobileBehavior({
       mobileDefault: 'disable', isMobile: true, override: 'on',
@@ -631,7 +631,7 @@ test('resolveMobileBehavior: on override beats disable default', async ({ page }
 });
 
 test('resolveMobileBehavior: off override beats everything', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() =>
     window.MotionKit._internals.breakpoints.resolveMobileBehavior({
       mobileDefault: 'run', isMobile: false, override: 'off',
@@ -715,7 +715,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-config.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('loadConfig returns defaults without user config', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const cfg = await page.evaluate(() => window.MotionKit._internals.config.loadConfig());
   expect(cfg.defaults.duration).toBe(700);
   expect(cfg.breakpoints.mobile).toBe(768);
@@ -724,7 +724,7 @@ test('loadConfig returns defaults without user config', async ({ page }) => {
 });
 
 test('loadConfig merges user overrides', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const cfg = await page.evaluate(() => {
     window.MotionKit = Object.assign(window.MotionKit || {}, {
       defaults: { duration: 1000 },
@@ -737,7 +737,7 @@ test('loadConfig merges user overrides', async ({ page }) => {
 });
 
 test('getEffectOptions: global effect override beats defaults', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const opts = await page.evaluate(() => {
     window.MotionKit = Object.assign(window.MotionKit || {}, {
       defaults: { duration: 700 },
@@ -858,7 +858,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-boot.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('registerEffect adds handler to the registry', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const size = await page.evaluate(() => {
     const { boot } = window.MotionKit._internals;
     boot.registerEffect({ name: 'dummy', classSelectors: ['mk-dummy'], mobileDefault: 'run', init: () => {} });
@@ -868,7 +868,7 @@ test('registerEffect adds handler to the registry', async ({ page }) => {
 });
 
 test('scan finds elements by any registered class selector', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const count = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild([
@@ -884,7 +884,7 @@ test('scan finds elements by any registered class selector', async ({ page }) =>
 });
 
 test('run() invokes init for each matched element', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const seen = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild([
@@ -908,7 +908,7 @@ test('run() invokes init for each matched element', async ({ page }) => {
 test('run() skips init when reduced motion active', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const called = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-dummy', id: 'a' });
@@ -925,7 +925,7 @@ test('run() skips init when reduced motion active', async ({ browser }) => {
 });
 
 test('refresh() picks up dynamically added elements', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const size = await page.evaluate(() => {
     window.mkClear();
     const { boot } = window.MotionKit._internals;
@@ -943,7 +943,7 @@ test('refresh() picks up dynamically added elements', async ({ page }) => {
 });
 
 test('getActiveEffects lists wired elements', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const active = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild([
@@ -1187,7 +1187,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-fade.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-fade-up hidden before init then revealed when in view', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const { before, after } = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({ className: 'mk-fade-up', id: 'f', text: 'hi' });
@@ -1204,7 +1204,7 @@ test('mk-fade-up hidden before init then revealed when in view', async ({ page }
 });
 
 test('mk-fade-up element gets mk-ready class after init', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const ok = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-fade-up', id: 'f' });
@@ -1217,7 +1217,7 @@ test('mk-fade-up element gets mk-ready class after init', async ({ page }) => {
 test('reduced-motion skips animation and reveals immediately', async ({ browser }) => {
   const ctx = await browser.newContext({ reducedMotion: 'reduce' });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const op = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-fade-up', id: 'f', text: 'hi' });
@@ -1405,7 +1405,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-marquee.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-marquee duplicates children in a track for seamless loop', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const result = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({
@@ -1428,7 +1428,7 @@ test('mk-marquee duplicates children in a track for seamless loop', async ({ pag
 });
 
 test('mk-marquee-pause-hover pauses animation on pointerenter', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const paused = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({
@@ -1569,7 +1569,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-hover.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-hover-zoom scales on pointerenter', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const transform = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({ className: 'mk-hover-zoom', id: 'h', style: { width: '100px', height: '100px', background: '#333' } });
@@ -1585,7 +1585,7 @@ test('mk-hover-zoom scales on pointerenter', async ({ page }) => {
 test('hover effects are disabled on mobile viewport', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const active = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-hover-zoom', id: 'h' });
@@ -1740,7 +1740,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-parallax.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-parallax registers on desktop', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-parallax', id: 'p' });
@@ -1753,7 +1753,7 @@ test('mk-parallax registers on desktop', async ({ page }) => {
 test('mk-parallax disabled on mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-parallax', id: 'p' });
@@ -1767,7 +1767,7 @@ test('mk-parallax disabled on mobile', async ({ browser }) => {
 test('mk-mobile-on forces parallax on mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ className: 'mk-parallax mk-mobile-on', id: 'p' });
@@ -1872,7 +1872,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-ken-burns.spec.js`
 import { test, expect } from '@playwright/test';
 
 test('mk-ken-burns auto-adds overflow:hidden to parent', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const overflow = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
@@ -1889,7 +1889,7 @@ test('mk-ken-burns auto-adds overflow:hidden to parent', async ({ page }) => {
 test('mk-ken-burns disabled on mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ tag: 'img', className: 'mk-ken-burns', id: 'k', attrs: { src: 'https://via.placeholder.com/400' } });
@@ -2002,7 +2002,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-pin.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-pin registers on desktop', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ tag: 'section', className: 'mk-pin', id: 'p', style: { height: '500px' } });
@@ -2015,7 +2015,7 @@ test('mk-pin registers on desktop', async ({ page }) => {
 test('mk-pin disabled on mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({ tag: 'section', className: 'mk-pin', id: 'p', style: { height: '500px' } });
@@ -2116,7 +2116,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-stagger.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-stagger children become visible after reveal', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const opacities = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({
@@ -2139,7 +2139,7 @@ test('mk-stagger children become visible after reveal', async ({ page }) => {
 test('mk-stagger runs on mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
@@ -2290,7 +2290,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-text.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-text-reveal splits text into characters', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const count = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({ tag: 'h1', className: 'mk-text-reveal', id: 't', text: 'Hello' });
@@ -2302,7 +2302,7 @@ test('mk-text-reveal splits text into characters', async ({ page }) => {
 });
 
 test('mk-text-split splits into words', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const count = await page.evaluate(async () => {
     window.mkClear();
     window.mkBuild({ tag: 'h1', className: 'mk-text-split', id: 't', text: 'Hello world now' });
@@ -2440,7 +2440,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-hscroll.spec.js`:
 import { test, expect } from '@playwright/test';
 
 test('mk-hscroll registers on desktop', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const a = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
@@ -2459,7 +2459,7 @@ test('mk-hscroll registers on desktop', async ({ page }) => {
 test('mk-hscroll disabled on mobile → native overflow fallback', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
@@ -2588,7 +2588,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-bg-crossfade.spec.
 import { test, expect } from '@playwright/test';
 
 test('mk-bg-crossfade creates fixed background layers', async ({ page }) => {
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const count = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
@@ -2608,7 +2608,7 @@ test('mk-bg-crossfade creates fixed background layers', async ({ page }) => {
 test('mk-bg-crossfade mobile fallback sets first image as background', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 375, height: 667 } });
   const page = await ctx.newPage();
-  await page.goto('/harness.html');
+  await page.goto('/tests/fixtures/harness.html');
   const r = await page.evaluate(() => {
     window.mkClear();
     window.mkBuild({
