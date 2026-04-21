@@ -1,0 +1,22 @@
+{
+  "name": "motion-kit",
+  "version": "0.1.0",
+  "description": "Class-driven animation library for Squarespace 7.1 sites",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "dev": "node esbuild.config.js --watch",
+    "demo": "python3 -m http.server 5173 --directory demo",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "esbuild": "^0.23.0",
+    "gsap": "^3.12.5"
+  }
+}
