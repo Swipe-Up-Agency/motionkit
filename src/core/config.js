@@ -7,10 +7,13 @@ const BASE_DEFAULTS = {
   debug: false,
 };
 
+const BLOCKED_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
 function deepMerge(base, overlay) {
   if (!overlay || typeof overlay !== 'object') return base;
   const out = Array.isArray(base) ? [...base] : { ...base };
   for (const key of Object.keys(overlay)) {
+    if (BLOCKED_KEYS.has(key)) continue;
     const a = base?.[key];
     const b = overlay[key];
     if (b === undefined) continue;
@@ -24,16 +27,21 @@ function deepMerge(base, overlay) {
 }
 
 export function loadConfig() {
-  const raw = (typeof window !== 'undefined' && window.MotionKit) || {};
-  const user = {
-    defaults: raw.defaults,
-    effects: raw.effects,
-    selectors: raw.selectors,
-    breakpoints: raw.breakpoints,
-    reducedMotion: raw.reducedMotion,
-    debug: raw.debug,
-  };
-  return deepMerge(BASE_DEFAULTS, user);
+  try {
+    const raw = (typeof window !== 'undefined' && window.MotionKit) || {};
+    const user = {
+      defaults: raw.defaults,
+      effects: raw.effects,
+      selectors: raw.selectors,
+      breakpoints: raw.breakpoints,
+      reducedMotion: raw.reducedMotion,
+      debug: raw.debug,
+    };
+    return deepMerge(BASE_DEFAULTS, user);
+  } catch (err) {
+    console.warn('[MotionKit] config load failed, using defaults:', err);
+    return deepMerge(BASE_DEFAULTS, {});
+  }
 }
 
 export function getEffectOptions(effectName, config, element = null) {
@@ -41,9 +49,10 @@ export function getEffectOptions(effectName, config, element = null) {
   if (element && config.selectors) {
     for (const [sel, opts] of Object.entries(config.selectors)) {
       if (opts.effect === effectName && element.matches(sel)) {
-        layers.push(opts);
+        const { effect: _discard, ...rest } = opts;
+        layers.push(rest);
       }
     }
   }
-  return layers.reduce((acc, layer) => ({ ...acc, ...layer }), {});
+  return layers.reduce((acc, layer) => deepMerge(acc, layer), {});
 }
