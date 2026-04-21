@@ -780,6 +780,7 @@ function deepMerge(base, overlay) {
   for (const key of Object.keys(overlay)) {
     const a = base?.[key];
     const b = overlay[key];
+    if (b === undefined) continue; // skip keys the user didn't actually set
     if (b && typeof b === 'object' && !Array.isArray(b)) {
       out[key] = deepMerge(a && typeof a === 'object' ? a : {}, b);
     } else {
