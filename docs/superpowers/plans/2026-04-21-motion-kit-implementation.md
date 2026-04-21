@@ -249,9 +249,10 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/fixtures/harness.html`:
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MotionKit Test Harness</title>
-  <script src="https://unpkg.com/gsap@3.12/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3.12/dist/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/gsap@3.12/dist/SplitText.min.js"></script>
+  <!-- Local GSAP for deterministic offline-capable tests. Production sites load these from unpkg — see README. -->
+  <script src="/node_modules/gsap/dist/gsap.min.js"></script>
+  <script src="/node_modules/gsap/dist/ScrollTrigger.min.js"></script>
+  <script src="/node_modules/gsap/dist/SplitText.min.js"></script>
   <script>
     // Safe DOM fixture builder. Never uses innerHTML.
     // spec: { tag?, id?, className?, style?, attrs?, text?, children? }
