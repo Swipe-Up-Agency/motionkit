@@ -43,8 +43,8 @@ Pasted into Settings → Advanced → Code Injection → Header on every client 
 
 ```html
 <!-- GSAP core + ScrollTrigger from GSAP's CDN -->
-<script src="https://unpkg.com/gsap@3.12/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
 
 <!-- MotionKit, pinned to a specific tag -->
 <script src="https://cdn.jsdelivr.net/gh/<your-handle>/motion-kit@v1.0.0/dist/motion-kit.min.js"></script>
