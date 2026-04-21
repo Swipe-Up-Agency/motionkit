@@ -355,6 +355,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/demo/index.html`:
   <style>
     body { margin: 0; font-family: system-ui, sans-serif; background: #111; color: #eee; }
     .section { min-height: 100vh; padding: 4rem 2rem; border-bottom: 1px solid #333; }
+    .section--light { background: #f4f4f4; color: #111; }
     h1, h2 { margin: 0 0 1rem; }
     .spacer { height: 80vh; }
     img { max-width: 100%; display: block; }
@@ -370,7 +371,9 @@ Write to `/Users/adrienolinger/Claude/motion-kit/demo/index.html`:
   </header>
   <div class="spacer"></div>
 
-  <!-- DEMO_INSERTION_POINT: effect sections are appended here as implemented -->
+  <main id="demo-sections">
+    <!-- Effect sections appended here by Tasks 11–20. Insert each new <section> as the last child. -->
+  </main>
 
   <footer class="section">
     <h2>End</h2>
@@ -1355,7 +1358,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, find the line `<!-- DEMO_INSERTION_POINT: effect sections are appended here as implemented -->` and insert immediately before it:
+In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">` (immediately before its closing `</main>`):
 ```html
 <section class="section" id="demo-fade">
   <h2>Scroll Reveal</h2>
@@ -1516,7 +1519,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, insert before the `DEMO_INSERTION_POINT` comment:
+In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-marquee">
   <h2>Marquee</h2>
@@ -1698,7 +1701,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html` before `DEMO_INSERTION_POINT`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-hover">
   <h2>Hover</h2>
@@ -1833,7 +1836,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html` before `DEMO_INSERTION_POINT`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-parallax" style="position:relative;overflow:hidden;min-height:120vh">
   <h2>Parallax</h2>
@@ -1968,7 +1971,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-ken-burns">
   <h2>Ken Burns</h2>
@@ -2083,7 +2086,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="mk-pin mk-pin-duration-2 section" style="background:#222;height:100vh;display:grid;place-items:center">
   <h2>Pinned section — 2 viewport-heights</h2>
@@ -2245,7 +2248,7 @@ Also add import: `import * as stagger from './effects/stagger.js';`.
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-stagger">
   <h2>Staggered Grid</h2>
@@ -2406,7 +2409,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-text">
   <h2>Text Animations</h2>
@@ -2552,7 +2555,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="mk-hscroll" style="height:100vh;overflow:hidden">
   <div style="width:400vw;display:flex;height:100%">
@@ -2723,7 +2726,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-Insert into `demo/index.html`:
+Append into `demo/index.html` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="mk-bg-crossfade" style="position:relative;min-height:200vh">
   <div class="mk-bg-image" data-mk-bg="https://picsum.photos/id/1018/1600/900"></div>
