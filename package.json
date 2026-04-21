@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node esbuild.config.js",
     "dev": "node esbuild.config.js --watch",
-    "demo": "python3 -m http.server 5173 --directory demo",
+    "demo": "python3 -m http.server 5173",
     "test": "playwright test",
     "test:ui": "playwright test --ui"
   },
