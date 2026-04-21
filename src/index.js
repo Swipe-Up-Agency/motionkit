@@ -2,10 +2,34 @@ import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
 import * as breakpoints from './core/breakpoints.js';
 import * as config from './core/config.js';
+import * as boot from './core/boot.js';
 
-(function boot() {
+// eslint-disable-next-line no-undef
+const ANTI_FOUC_CSS = typeof __ANTI_FOUC_CSS__ !== 'undefined' ? __ANTI_FOUC_CSS__ : '';
+
+function injectAntiFouc() {
+  if (!ANTI_FOUC_CSS || document.getElementById('mk-anti-fouc')) return;
+  const style = document.createElement('style');
+  style.id = 'mk-anti-fouc';
+  style.textContent = ANTI_FOUC_CSS;
+  document.head.appendChild(style);
+}
+
+(function init() {
   if (typeof window === 'undefined') return;
-  window.MotionKit = window.MotionKit || {};
-  window.MotionKit.version = '0.1.0';
-  window.MotionKit._internals = { tokens, reducedMotion, breakpoints, config };
+  const existing = window.MotionKit || {};
+  window.MotionKit = Object.assign(existing, {
+    version: '0.1.0',
+    refresh: boot.refresh,
+    getRegistry: boot.getRegistry,
+    getActiveEffects: boot.getActiveEffects,
+    _internals: { tokens, reducedMotion, breakpoints, config, boot },
+  });
+  injectAntiFouc();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot.run, { once: true });
+  } else {
+    boot.run();
+  }
 })();
