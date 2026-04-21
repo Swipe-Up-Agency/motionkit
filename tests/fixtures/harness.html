@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MotionKit Test Harness</title>
+  <script src="https://unpkg.com/gsap@3.12/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12/dist/SplitText.min.js"></script>
+  <script>
+    // Safe DOM fixture builder. Never uses innerHTML.
+    // spec: { tag?, id?, className?, style?, attrs?, text?, children? }
+    window.mkClear = function () {
+      const fixture = document.getElementById('fixture');
+      while (fixture.firstChild) fixture.removeChild(fixture.firstChild);
+    };
+    window.mkBuild = function (spec) {
+      function build(node) {
+        if (typeof node === 'string') return document.createTextNode(node);
+        const el = document.createElement(node.tag || 'div');
+        if (node.id) el.id = node.id;
+        if (node.className) el.className = node.className;
+        if (node.style) Object.assign(el.style, node.style);
+        if (node.attrs) {
+          for (const [k, v] of Object.entries(node.attrs)) el.setAttribute(k, v);
+        }
+        if (node.text) el.textContent = node.text;
+        if (node.children) {
+          for (const child of node.children) el.appendChild(build(child));
+        }
+        return el;
+      }
+      const fixture = document.getElementById('fixture');
+      const list = Array.isArray(spec) ? spec : [spec];
+      for (const s of list) fixture.appendChild(build(s));
+    };
+  </script>
+</head>
+<body>
+  <div id="fixture"></div>
+  <script src="../../dist/motion-kit.min.js"></script>
+</body>
+</html>
