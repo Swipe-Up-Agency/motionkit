@@ -1,0 +1,9 @@
+.mk-fade-up:not(.mk-ready),
+.mk-fade-down:not(.mk-ready),
+.mk-fade-in:not(.mk-ready),
+.mk-slide-left:not(.mk-ready),
+.mk-slide-right:not(.mk-ready),
+.mk-scale-in:not(.mk-ready),
+.mk-reveal-up:not(.mk-ready) {
+  opacity: 0;
+}
