@@ -3,6 +3,7 @@ import * as reducedMotion from './core/reduced-motion.js';
 import * as breakpoints from './core/breakpoints.js';
 import * as config from './core/config.js';
 import * as boot from './core/boot.js';
+import * as fade from './effects/fade.js';
 
 // eslint-disable-next-line no-undef
 const ANTI_FOUC_CSS = typeof __ANTI_FOUC_CSS__ !== 'undefined' ? __ANTI_FOUC_CSS__ : '';
@@ -16,7 +17,7 @@ function injectAntiFouc() {
 }
 
 function registerAll() {
-  // Effects register here; added in Phase 3+.
+  boot.registerEffect(fade);
 }
 
 (function init() {
