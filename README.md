@@ -22,16 +22,16 @@ In the Squarespace admin, go to **Settings → Advanced → Code Injection → H
 <script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.1.0/dist/motion-kit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.2.0/dist/motion-kit.min.js"></script>
 ```
 
 jsDelivr serves straight from the tagged Git release — no npm publish needed. Path segments:
 
 - `/gh/Swipe-Up-Agency/` — GitHub org (hosts the repo)
-- `/motionkit@v1.1.0/` — repo name + release tag (immutable once tagged)
+- `/motionkit@v1.2.0/` — repo name + release tag (immutable once tagged)
 - `/dist/motion-kit.min.js` — the committed bundle artifact
 
-Pin to `@v1.1.0` on live client sites. The tag never changes, so clients never get surprise updates.
+Pin to `@v1.2.0` on live client sites. The tag never changes, so clients never get surprise updates.
 
 **Step 3 — Attach effects to elements**
 
@@ -46,9 +46,10 @@ In the same Code Injection header, right after the MotionKit script tag, declare
   window.MotionKit = Object.assign(window.MotionKit || {}, {
     selectors: {
       '[data-section-id="hero"]': { effect: 'parallax', intensity: 0.3 },
-      '[data-section-id="hero"] h1': { effect: 'text' },
+      '[data-section-id="hero"] h1': { effect: 'text', variant: 'reveal' },
       '[data-section-id="gallery"] img': { effect: 'kenBurns' },
-      '.sqs-block-image img': { effect: 'fade' },
+      '.sqs-block-image img': { effect: 'fade', variant: 'fade-up' },
+      '.cta-button': { effect: 'hover', variant: 'magnetic' },
     },
   });
 </script>
@@ -59,6 +60,14 @@ In the same Code Injection header, right after the MotionKit script tag, declare
 To find a selector for a Squarespace element, open the site in Chrome DevTools → Elements panel → right-click → Copy → Copy selector. Sections expose `[data-section-id]` natively; you can also set a Section ID in the section's Settings → Advanced for a cleaner selector.
 
 The `effect` key names the effect module (`fade`, `text`, `parallax`, `marquee`, `hover`, `kenBurns`, `pin`, `hscroll`, `bgCrossfade`, `stagger`). Any other keys on the entry become effect options.
+
+Three effects take a required `variant` option (their behavior otherwise depends on a variant class that only exists in Path B / Code Block usage):
+
+- `fade` — `variant: 'fade-up' | 'fade-down' | 'fade-in' | 'slide-left' | 'slide-right' | 'scale-in' | 'reveal-up'`
+- `text` — `variant: 'reveal' | 'split' | 'typewriter'`
+- `hover` — `variant: 'magnetic' | 'zoom' | 'tilt'`
+
+The other effects (`parallax`, `marquee`, `kenBurns`, `pin`, `hscroll`, `bgCrossfade`, `stagger`) work with just `{ effect: 'name' }` and take their intensity/speed/mode from additional options keys (see per-effect docs).
 
 This is the cleanest path for an agency workflow — one config block covers the whole site, no per-block tagging needed.
 

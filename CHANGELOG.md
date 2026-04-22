@@ -4,6 +4,22 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-04-22
+
+### Added
+
+- `fade`, `text`, and `hover` effects now accept a `variant` option when attached via `config.selectors`. Previously these effects required a variant class on the element (e.g. `mk-fade-up`), which `config.selectors` cannot provide. Now `{ effect: 'fade', variant: 'fade-up' }` in a selector entry works the same as adding `class="mk-fade-up"` to the element.
+- Variant option accepts either the bare variant name (`'fade-up'`, `'reveal'`, `'magnetic'`) or the full class name (`'mk-fade-up'`, etc.); both resolve correctly.
+- 3 new tests covering selector-based attachment of fade/text/hover with variant options.
+
+### Fixed
+
+- Closes the last v1.0/v1.1 gap: the full v1 effect set is now attachable via `config.selectors` with no classList required. Agency workflow on Squarespace 7.1 sites no longer needs bootstrap JS workarounds for text reveals, fade-ins, or hover effects.
+
+### Changed
+
+- `text.js` and `hover.js` init signatures now accept an optional `options` parameter (was already accepted by `fade.js` since v1.1 polish). Class-based usage is unchanged — `options` is only consulted when no variant class is present.
+
 ## [1.1.0] — 2026-04-22
 
 ### Fixed
