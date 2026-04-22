@@ -4,6 +4,7 @@ import * as breakpoints from './core/breakpoints.js';
 import * as config from './core/config.js';
 import * as boot from './core/boot.js';
 import * as fade from './effects/fade.js';
+import * as marquee from './effects/marquee.js';
 
 // eslint-disable-next-line no-undef
 const ANTI_FOUC_CSS = typeof __ANTI_FOUC_CSS__ !== 'undefined' ? __ANTI_FOUC_CSS__ : '';
@@ -18,6 +19,7 @@ function injectAntiFouc() {
 
 function registerAll() {
   boot.registerEffect(fade);
+  boot.registerEffect(marquee);
 }
 
 (function init() {
