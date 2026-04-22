@@ -1,6 +1,6 @@
 {
   "name": "motion-kit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Class-driven animation library for Squarespace 7.1 sites",
   "private": true,
   "type": "module",

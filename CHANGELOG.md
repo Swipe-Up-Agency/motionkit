@@ -4,7 +4,7 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [1.0.0] — UNRELEASED
+## [1.0.0] — 2026-04-22
 
 ### Added
 
