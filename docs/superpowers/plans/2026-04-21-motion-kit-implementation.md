@@ -10,7 +10,7 @@
 
 **Spec reference:** `docs/superpowers/specs/2026-04-21-motion-kit-design.md`
 
-**Working directory for all tasks:** `/Users/adrienolinger/Claude/motion-kit`
+**Working directory for all tasks:** `/Users/Swipe-Up-Agency/Claude/motion-kit`
 
 **Testing note:** All Playwright tests build fixture DOM with a safe `window.mkBuild(spec)` / `window.mkClear()` helper installed in the test harness. Tests never assign to element attributes used as HTML sinks — they construct elements with `createElement`, `classList.add`, `textContent`, and `setAttribute` only.
 
@@ -21,13 +21,13 @@
 ### Task 1: Initialize repository and npm project
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/package.json`
-- Create: `/Users/adrienolinger/Claude/motion-kit/.gitignore`
-- Create: `/Users/adrienolinger/Claude/motion-kit/README.md` (stub)
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/package.json`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/.gitignore`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/README.md` (stub)
 
 - [ ] **Step 1: Initialize git repo**
 
-Run from `/Users/adrienolinger/Claude/motion-kit`:
+Run from `/Users/Swipe-Up-Agency/Claude/motion-kit`:
 ```bash
 git init
 git branch -M main
@@ -36,7 +36,7 @@ Expected: `Initialized empty Git repository` and branch renamed to `main`.
 
 - [ ] **Step 2: Create package.json**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/package.json`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/package.json`:
 ```json
 {
   "name": "motion-kit",
@@ -64,7 +64,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/package.json`:
 
 - [ ] **Step 3: Create .gitignore**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/.gitignore`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/.gitignore`:
 ```
 node_modules/
 .DS_Store
@@ -78,7 +78,7 @@ Note: `dist/` is **not** ignored — it must be committed so jsDelivr can serve 
 
 - [ ] **Step 4: Create README stub**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/README.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/README.md`:
 ```markdown
 # MotionKit
 
@@ -89,7 +89,7 @@ Class-driven animation library for Squarespace 7.1 sites, built on GSAP + Scroll
 
 - [ ] **Step 5: Install dependencies**
 
-Run from `/Users/adrienolinger/Claude/motion-kit`:
+Run from `/Users/Swipe-Up-Agency/Claude/motion-kit`:
 ```bash
 npm install
 ```
@@ -107,13 +107,13 @@ git commit -m "chore: initialize motion-kit project"
 ### Task 2: Set up esbuild build system
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/esbuild.config.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/index.js` (stub)
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/styles/anti-fouc.css`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/esbuild.config.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js` (stub)
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/styles/anti-fouc.css`
 
 - [ ] **Step 1: Create stub entry point**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 (function boot() {
   if (typeof window === 'undefined') return;
@@ -124,7 +124,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
 
 - [ ] **Step 2: Create anti-FOUC stylesheet**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/styles/anti-fouc.css`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/styles/anti-fouc.css`:
 ```css
 .mk-fade-up:not(.mk-ready),
 .mk-fade-down:not(.mk-ready),
@@ -139,7 +139,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/src/styles/anti-fouc.css`:
 
 - [ ] **Step 3: Create esbuild config**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/esbuild.config.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/esbuild.config.js`:
 ```js
 import { build, context } from 'esbuild';
 import { readFileSync, mkdirSync } from 'node:fs';
@@ -201,9 +201,9 @@ git commit -m "feat: esbuild IIFE bundle with inlined anti-FOUC CSS"
 ### Task 3: Set up Playwright test harness with safe fixture builder
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/playwright.config.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/fixtures/harness.html`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/smoke.spec.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/playwright.config.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/fixtures/harness.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/smoke.spec.js`
 
 - [ ] **Step 1: Install Playwright browsers**
 
@@ -214,7 +214,7 @@ npx playwright install chromium
 
 - [ ] **Step 2: Create Playwright config**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/playwright.config.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/playwright.config.js`:
 ```js
 import { defineConfig } from '@playwright/test';
 
@@ -241,7 +241,7 @@ export default defineConfig({
 
 - [ ] **Step 3: Create test harness with safe DOM builder**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/fixtures/harness.html`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/fixtures/harness.html`:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -291,7 +291,7 @@ Write to `/Users/adrienolinger/Claude/motion-kit/tests/fixtures/harness.html`:
 
 - [ ] **Step 4: Write smoke test**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/smoke.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/smoke.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -340,11 +340,11 @@ git commit -m "test: Playwright harness with safe DOM fixture builder"
 ### Task 4: Scaffold demo page
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write demo page**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/demo/index.html`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -402,12 +402,12 @@ git commit -m "feat: demo page scaffold"
 ### Task 5: Tokens module
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/core/tokens.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/core-tokens.spec.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/tokens.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-tokens.spec.js`
 
 - [ ] **Step 1: Write failing test**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-tokens.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-tokens.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -440,7 +440,7 @@ Expected: 3 failed (`_internals` undefined).
 
 - [ ] **Step 3: Implement tokens**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/core/tokens.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/tokens.js`:
 ```js
 export const DURATION = { fast: 300, base: 700, slow: 1200 };
 export const DELAY = { 100: 100, 200: 200, 300: 300, 400: 400, 500: 500, 600: 600, 700: 700, 800: 800 };
@@ -450,7 +450,7 @@ export const DISTANCE = { sm: 20, base: 60, lg: 120 };
 
 - [ ] **Step 4: Wire into index.js**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 
@@ -481,12 +481,12 @@ git commit -m "feat(core): tokens for duration/delay/easing/distance"
 ### Task 6: Reduced-motion module
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/core/reduced-motion.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/core-reduced-motion.spec.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/reduced-motion.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-reduced-motion.spec.js`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-reduced-motion.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-reduced-motion.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -536,7 +536,7 @@ Expected: 4 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/core/reduced-motion.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/reduced-motion.js`:
 ```js
 export function isReducedMotion(mode = 'auto') {
   if (mode === 'always') return true;
@@ -548,7 +548,7 @@ export function isReducedMotion(mode = 'auto') {
 
 - [ ] **Step 4: Wire into index.js**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -580,12 +580,12 @@ git commit -m "feat(core): reduced-motion detection with auto/always/never modes
 ### Task 7: Breakpoints module
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/core/breakpoints.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/core-breakpoints.spec.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/breakpoints.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-breakpoints.spec.js`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-breakpoints.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-breakpoints.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -653,7 +653,7 @@ Expected: 6 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/core/breakpoints.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/breakpoints.js`:
 ```js
 export function isMobile(breakpoint = 768) {
   if (typeof window === 'undefined') return false;
@@ -676,7 +676,7 @@ export function readMobileOverride(element) {
 
 - [ ] **Step 4: Wire into index.js**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -709,12 +709,12 @@ git commit -m "feat(core): mobile breakpoint detection + per-element override re
 ### Task 8: Config module
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/core/config.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/core-config.spec.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/config.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-config.spec.js`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-config.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-config.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -763,7 +763,7 @@ Expected: 3 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/core/config.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/config.js`:
 ```js
 const BASE_DEFAULTS = {
   defaults: { duration: 700, easing: 'power2.out' },
@@ -818,7 +818,7 @@ export function getEffectOptions(effectName, config, element = null) {
 
 - [ ] **Step 4: Wire into index.js**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -852,13 +852,13 @@ git commit -m "feat(core): config loader with deep-merge and precedence resolver
 ### Task 9: Boot module (scanner + registry + run/refresh)
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/core/boot.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/core-boot.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/boot.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-boot.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/core-boot.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/core-boot.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -973,7 +973,7 @@ Expected: 6 failed.
 
 - [ ] **Step 3: Implement boot**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/core/boot.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/core/boot.js`:
 ```js
 import { loadConfig, getEffectOptions } from './config.js';
 import { isReducedMotion } from './reduced-motion.js';
@@ -1054,7 +1054,7 @@ export function refresh() { run(); }
 
 - [ ] **Step 4: Wire boot into index.js + inject anti-FOUC CSS**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -1115,7 +1115,7 @@ Prepare index.js for effect registration without duplicating the boot file later
 
 - [ ] **Step 1: Add registerAll() wrapper**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/src/index.js`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -1180,14 +1180,14 @@ git commit -m "refactor: extract registerAll() wrapper for upcoming effects"
 ### Task 11: Effect — scroll reveal (fade/slide/scale)
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/fade.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-fade.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/fade.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-fade.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-fade.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-fade.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -1243,7 +1243,7 @@ Expected: 3 failed.
 
 - [ ] **Step 3: Implement fade**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/fade.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/fade.js`:
 ```js
 import { DURATION, DELAY, DISTANCE, EASING } from '../core/tokens.js';
 
@@ -1312,7 +1312,7 @@ export function init(element, options) {
 
 - [ ] **Step 4: Register in index.js**
 
-In `/Users/adrienolinger/Claude/motion-kit/src/index.js`, add import and call inside `registerAll`. Full file:
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`, add import and call inside `registerAll`. Full file:
 ```js
 import * as tokens from './core/tokens.js';
 import * as reducedMotion from './core/reduced-motion.js';
@@ -1359,7 +1359,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">` (immediately before its closing `</main>`):
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">` (immediately before its closing `</main>`):
 ```html
 <section class="section" id="demo-fade">
   <h2>Scroll Reveal</h2>
@@ -1398,14 +1398,14 @@ git commit -m "feat(effects): scroll-reveal (fade/slide/scale/reveal)"
 ### Task 12: Effect — marquee
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/marquee.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-marquee.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/marquee.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-marquee.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-marquee.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-marquee.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -1462,7 +1462,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement marquee**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/marquee.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/marquee.js`:
 ```js
 const SPEED = { slow: 80, base: 40, fast: 20 }; // seconds per loop
 
@@ -1510,7 +1510,7 @@ export function init(element) {
 
 - [ ] **Step 4: Register in index.js**
 
-In `/Users/adrienolinger/Claude/motion-kit/src/index.js`, add `import * as marquee from './effects/marquee.js';` after the fade import, and add `boot.registerEffect(marquee);` inside `registerAll()`. Final `registerAll`:
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`, add `import * as marquee from './effects/marquee.js';` after the fade import, and add `boot.registerEffect(marquee);` inside `registerAll()`. Final `registerAll`:
 ```js
 function registerAll() {
   boot.registerEffect(fade);
@@ -1520,7 +1520,7 @@ function registerAll() {
 
 - [ ] **Step 5: Add demo section**
 
-In `/Users/adrienolinger/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">`:
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`, append the following `<section>` as the last child of `<main id="demo-sections">`:
 ```html
 <section class="section" id="demo-marquee">
   <h2>Marquee</h2>
@@ -1562,14 +1562,14 @@ git commit -m "feat(effects): marquee with speed/reverse/pause-on-hover"
 ### Task 13: Effect — hover interactions (magnetic/zoom/tilt)
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/hover.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-hover.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/hover.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-hover.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-hover.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-hover.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -1611,7 +1611,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement hover**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/hover.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/hover.js`:
 ```js
 const STRENGTH = { low: 0.15, base: 0.3, high: 0.5 };
 
@@ -1733,14 +1733,14 @@ git commit -m "feat(effects): hover interactions (magnetic/zoom/tilt), mobile-di
 ### Task 14: Effect — parallax
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/parallax.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-parallax.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/parallax.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-parallax.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-parallax.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-parallax.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -1793,7 +1793,7 @@ Expected: 3 failed.
 
 - [ ] **Step 3: Implement parallax**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/parallax.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/parallax.js`:
 ```js
 const INTENSITY = { slow: 15, med: 30, fast: 50 };
 
@@ -1865,14 +1865,14 @@ git commit -m "feat(effects): parallax with slow/med/fast intensity, mobile-disa
 ### Task 15: Effect — Ken Burns
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/ken-burns.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-ken-burns.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/ken-burns.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-ken-burns.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-ken-burns.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-ken-burns.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -1915,7 +1915,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/ken-burns.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/ken-burns.js`:
 ```js
 const INTENSITY = { low: 0.05, base: 0.1, high: 0.2 };
 
@@ -1995,14 +1995,14 @@ git commit -m "feat(effects): Ken Burns zoom/pan on scroll, mobile-disabled"
 ### Task 16: Effect — sticky pin
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/pin.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-pin.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/pin.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-pin.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-pin.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-pin.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -2041,7 +2041,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/pin.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/pin.js`:
 ```js
 const VH = { 1: 1, 2: 2, 3: 3, 4: 4 };
 
@@ -2107,16 +2107,16 @@ git commit -m "feat(effects): sticky pin (mk-pin), mobile-disabled"
 ### Task 17: Effect — staggered grid reveal
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/stagger.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-stagger.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/stagger.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-stagger.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 Note: stagger must register **before** fade so it claims children first and marks `dataset.mkStaggerChild` before fade sees them.
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-stagger.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-stagger.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -2168,7 +2168,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/stagger.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/stagger.js`:
 ```js
 const SPEED = { fast: 0.05, base: 0.1, slow: 0.2 };
 
@@ -2281,16 +2281,16 @@ git commit -m "feat(effects): staggered grid reveal with wave/diagonal/random pa
 ### Task 18: Effect — text animations (uses SplitText)
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/text.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-text.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/text.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-text.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 (Harness already includes SplitText from Task 3.)
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-text.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-text.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -2328,7 +2328,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/text.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/text.js`:
 ```js
 function pickMode(el) {
   if (el.classList.contains('mk-text-reveal')) return 'reveal';
@@ -2433,14 +2433,14 @@ git commit -m "feat(effects): text animations (reveal/split/typewriter) via Spli
 ### Task 19: Effect — horizontal scroll pin (with mobile fallback)
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/hscroll.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-hscroll.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/hscroll.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-hscroll.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-hscroll.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-hscroll.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -2494,7 +2494,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/hscroll.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/hscroll.js`:
 ```js
 export const name = 'hscroll';
 export const classSelectors = ['mk-hscroll'];
@@ -2581,14 +2581,14 @@ git commit -m "feat(effects): horizontal scroll pin with native mobile fallback"
 ### Task 20: Effect — fixed background crossfade
 
 **Files:**
-- Create: `/Users/adrienolinger/Claude/motion-kit/src/effects/bg-crossfade.js`
-- Create: `/Users/adrienolinger/Claude/motion-kit/tests/effect-bg-crossfade.spec.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/demo/index.html`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/bg-crossfade.js`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-bg-crossfade.spec.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/demo/index.html`
 
 - [ ] **Step 1: Write failing tests**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/tests/effect-bg-crossfade.spec.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/tests/effect-bg-crossfade.spec.js`:
 ```js
 import { test, expect } from '@playwright/test';
 
@@ -2645,7 +2645,7 @@ Expected: 2 failed.
 
 - [ ] **Step 3: Implement**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/src/effects/bg-crossfade.js`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/src/effects/bg-crossfade.js`:
 ```js
 export const name = 'bgCrossfade';
 export const classSelectors = ['mk-bg-crossfade'];
@@ -2754,11 +2754,11 @@ git commit -m "feat(effects): fixed background crossfade with mobile fallback"
 
 ### Task 21: Per-effect documentation
 
-**Files:** create one markdown file per effect in `/Users/adrienolinger/Claude/motion-kit/docs/effects/`.
+**Files:** create one markdown file per effect in `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/`.
 
 - [ ] **Step 1: Create `fade.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/fade.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/fade.md`:
 ```markdown
 # Scroll Reveal (fade/slide/scale)
 
@@ -2788,7 +2788,7 @@ In block settings → "Add class name": `mk-fade-up mk-duration-slow mk-delay-20
 
 - [ ] **Step 2: Create `parallax.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/parallax.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/parallax.md`:
 ```markdown
 # Parallax
 
@@ -2810,7 +2810,7 @@ Disabled by default.
 
 - [ ] **Step 3: Create `text.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/text.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/text.md`:
 ```markdown
 # Text Animations
 
@@ -2833,7 +2833,7 @@ Runs for `reveal` and `split`. `typewriter` simplifies to fade.
 
 - [ ] **Step 4: Create `hover.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/hover.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/hover.md`:
 ```markdown
 # Hover Interactions
 
@@ -2854,7 +2854,7 @@ Disabled (no hover on touch devices).
 
 - [ ] **Step 5: Create `marquee.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/marquee.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/marquee.md`:
 ```markdown
 # Marquee
 
@@ -2877,7 +2877,7 @@ A container with repeatable logo spans: `<div class="mk-marquee mk-marquee-base"
 
 - [ ] **Step 6: Create `pin.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/pin.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/pin.md`:
 ```markdown
 # Sticky Pin
 
@@ -2898,7 +2898,7 @@ Disabled (scroll-jacking is hostile to touch devices).
 
 - [ ] **Step 7: Create `hscroll.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/hscroll.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/hscroll.md`:
 ```markdown
 # Horizontal Scroll Pin
 
@@ -2924,7 +2924,7 @@ Squarespace wraps sections in its own transforms on some block types. v1 targets
 
 - [ ] **Step 8: Create `bg-crossfade.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/bg-crossfade.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/bg-crossfade.md`:
 ```markdown
 # Fixed Background Crossfade
 
@@ -2948,7 +2948,7 @@ Disabled. Falls back to showing the first image as a static background.
 
 - [ ] **Step 9: Create `ken-burns.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/ken-burns.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/ken-burns.md`:
 ```markdown
 # Ken Burns
 
@@ -2970,7 +2970,7 @@ Disabled.
 
 - [ ] **Step 10: Create `stagger.md`**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/docs/effects/stagger.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/docs/effects/stagger.md`:
 ```markdown
 # Staggered Grid Reveal
 
@@ -3007,12 +3007,12 @@ git commit -m "docs: per-effect usage documentation"
 ### Task 22: README and CHANGELOG
 
 **Files:**
-- Modify: `/Users/adrienolinger/Claude/motion-kit/README.md`
-- Create: `/Users/adrienolinger/Claude/motion-kit/CHANGELOG.md`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/README.md`
+- Create: `/Users/Swipe-Up-Agency/Claude/motion-kit/CHANGELOG.md`
 
 - [ ] **Step 1: Write full README**
 
-Replace `/Users/adrienolinger/Claude/motion-kit/README.md`:
+Replace `/Users/Swipe-Up-Agency/Claude/motion-kit/README.md`:
 ```markdown
 # MotionKit
 
@@ -3095,7 +3095,7 @@ MIT (update before first public use).
 
 - [ ] **Step 2: Create CHANGELOG**
 
-Write to `/Users/adrienolinger/Claude/motion-kit/CHANGELOG.md`:
+Write to `/Users/Swipe-Up-Agency/Claude/motion-kit/CHANGELOG.md`:
 ```markdown
 # Changelog
 
@@ -3124,21 +3124,21 @@ git commit -m "docs: README and CHANGELOG"
 ### Task 23: Bump to v1.0.0 and tag release
 
 **Files:**
-- Modify: `/Users/adrienolinger/Claude/motion-kit/package.json`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/src/index.js`
-- Modify: `/Users/adrienolinger/Claude/motion-kit/CHANGELOG.md`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/package.json`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`
+- Modify: `/Users/Swipe-Up-Agency/Claude/motion-kit/CHANGELOG.md`
 
 - [ ] **Step 1: Bump package version**
 
-In `/Users/adrienolinger/Claude/motion-kit/package.json`, change `"version": "0.1.0"` to `"version": "1.0.0"`.
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/package.json`, change `"version": "0.1.0"` to `"version": "1.0.0"`.
 
 - [ ] **Step 2: Bump runtime version string**
 
-In `/Users/adrienolinger/Claude/motion-kit/src/index.js`, change `version: '0.1.0'` to `version: '1.0.0'`.
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/src/index.js`, change `version: '0.1.0'` to `version: '1.0.0'`.
 
 - [ ] **Step 3: Date the CHANGELOG entry**
 
-In `/Users/adrienolinger/Claude/motion-kit/CHANGELOG.md`, change `## [1.0.0] — UNRELEASED` to `## [1.0.0] — 2026-04-21` (or today's date if different).
+In `/Users/Swipe-Up-Agency/Claude/motion-kit/CHANGELOG.md`, change `## [1.0.0] — UNRELEASED` to `## [1.0.0] — 2026-04-21` (or today's date if different).
 
 - [ ] **Step 4: Final build and full test run**
 
