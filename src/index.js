@@ -10,6 +10,7 @@ import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
 import * as kenBurns from './effects/ken-burns.js';
 import * as pin from './effects/pin.js';
+import * as hscroll from './effects/hscroll.js';
 import * as stagger from './effects/stagger.js';
 
 // eslint-disable-next-line no-undef
@@ -32,6 +33,7 @@ function registerAll() {
   boot.registerEffect(parallax);
   boot.registerEffect(kenBurns);
   boot.registerEffect(pin);
+  boot.registerEffect(hscroll);
 }
 
 (function init() {
