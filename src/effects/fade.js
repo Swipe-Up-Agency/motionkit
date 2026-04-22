@@ -17,8 +17,13 @@ function readToken(el, prefix, table, fallback) {
   return fallback;
 }
 
-function pickVariant(el) {
+function pickVariant(el, options) {
   for (const cls of Object.keys(VARIANTS)) if (el.classList.contains(cls)) return VARIANTS[cls];
+  if (options?.variant) {
+    const raw = String(options.variant);
+    const key = raw.startsWith('mk-') ? raw : `mk-${raw}`;
+    if (VARIANTS[key]) return VARIANTS[key];
+  }
   return null;
 }
 
@@ -42,7 +47,7 @@ export function init(element, options = {}) {
   if (!gsap || !ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
 
-  const variant = pickVariant(element);
+  const variant = pickVariant(element, options);
   if (!variant) return;
 
   const duration = readToken(element, 'mk-duration', DURATION, options.duration ?? DURATION.base) / 1000;

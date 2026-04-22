@@ -5,10 +5,14 @@ function readStrength(el) {
   return STRENGTH.base;
 }
 
-function pickMode(el) {
+function pickMode(el, options) {
   if (el.classList.contains('mk-hover-magnetic')) return 'magnetic';
   if (el.classList.contains('mk-hover-zoom')) return 'zoom';
   if (el.classList.contains('mk-hover-tilt')) return 'tilt';
+  if (options?.variant) {
+    const v = String(options.variant).replace(/^mk-hover-/, '').replace(/^mk-/, '');
+    if (v === 'magnetic' || v === 'zoom' || v === 'tilt') return v;
+  }
   return null;
 }
 
@@ -16,10 +20,10 @@ export const name = 'hover';
 export const classSelectors = ['mk-hover-magnetic', 'mk-hover-zoom', 'mk-hover-tilt'];
 export const mobileDefault = 'disable';
 
-export function init(element) {
+export function init(element, options = {}) {
   const gsap = window.gsap;
   if (!gsap) return;
-  const mode = pickMode(element);
+  const mode = pickMode(element, options);
   const strength = readStrength(element);
   if (mode === 'magnetic') return wireMagnetic(gsap, element, strength);
   if (mode === 'zoom') return wireZoom(gsap, element, strength);

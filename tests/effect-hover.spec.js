@@ -27,3 +27,20 @@ test('hover effects are disabled on mobile viewport', async ({ browser }) => {
   expect(active).toBe(false);
   await ctx.close();
 });
+
+test('hover attaches via config.selectors with variant option', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const transform = await page.evaluate(async () => {
+    window.mkClear();
+    window.mkBuild({ id: 'selhover', style: { width: '100px', height: '100px', background: '#333' } });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { '#selhover': { effect: 'hover', variant: 'zoom' } },
+    });
+    window.MotionKit.refresh();
+    const el = document.getElementById('selhover');
+    el.dispatchEvent(new PointerEvent('pointerenter'));
+    await new Promise((r) => setTimeout(r, 400));
+    return getComputedStyle(el).transform;
+  });
+  expect(transform).not.toBe('none');
+});

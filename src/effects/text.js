@@ -1,7 +1,11 @@
-function pickMode(el) {
+function pickMode(el, options) {
   if (el.classList.contains('mk-text-reveal')) return 'reveal';
   if (el.classList.contains('mk-text-split')) return 'split';
   if (el.classList.contains('mk-text-typewriter')) return 'typewriter';
+  if (options?.variant) {
+    const v = String(options.variant).replace(/^mk-text-/, '').replace(/^mk-/, '');
+    if (v === 'reveal' || v === 'split' || v === 'typewriter') return v;
+  }
   return null;
 }
 
@@ -9,7 +13,7 @@ export const name = 'text';
 export const classSelectors = ['mk-text-reveal', 'mk-text-split', 'mk-text-typewriter'];
 export const mobileDefault = 'run';
 
-export function init(element) {
+export function init(element, options = {}) {
   const gsap = window.gsap;
   const ScrollTrigger = window.ScrollTrigger;
   const SplitText = window.SplitText;
@@ -19,7 +23,7 @@ export function init(element) {
   }
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  const mode = pickMode(element);
+  const mode = pickMode(element, options);
   if (mode === 'reveal') return wireReveal(gsap, SplitText, element);
   if (mode === 'split') return wireSplit(gsap, SplitText, element);
   if (mode === 'typewriter') return wireTypewriter(gsap, ScrollTrigger, element);

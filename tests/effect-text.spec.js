@@ -39,3 +39,18 @@ test('mk-text-typewriter keeps text visible until scrolled into view', async ({ 
   });
   expect(textBeforeScroll).toBe('Hello typewriter world');
 });
+
+test('text attaches via config.selectors with variant option', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const count = await page.evaluate(async () => {
+    window.mkClear();
+    window.mkBuild({ tag: 'h1', id: 'seltext', text: 'Hello' });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { '#seltext': { effect: 'text', variant: 'reveal' } },
+    });
+    window.MotionKit.refresh();
+    await new Promise((r) => setTimeout(r, 200));
+    return document.getElementById('seltext').querySelectorAll('.mk-char').length;
+  });
+  expect(count).toBe(5);
+});

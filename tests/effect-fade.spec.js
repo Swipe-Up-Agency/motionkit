@@ -41,3 +41,20 @@ test('reduced-motion skips animation and reveals immediately', async ({ browser 
   expect(Number(op)).toBe(1);
   await ctx.close();
 });
+
+test('fade attaches via config.selectors with variant option', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const opacity = await page.evaluate(async () => {
+    window.mkClear();
+    window.mkBuild({ id: 'selhero', text: 'sel-based' });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { '#selhero': { effect: 'fade', variant: 'fade-up' } },
+    });
+    window.MotionKit.refresh();
+    window.ScrollTrigger.refresh();
+    document.getElementById('selhero').scrollIntoView();
+    await new Promise((r) => setTimeout(r, 1200));
+    return getComputedStyle(document.getElementById('selhero')).opacity;
+  });
+  expect(Number(opacity)).toBeGreaterThan(0.9);
+});
