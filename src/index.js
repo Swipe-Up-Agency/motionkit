@@ -9,6 +9,7 @@ import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
 import * as kenBurns from './effects/ken-burns.js';
 import * as pin from './effects/pin.js';
+import * as stagger from './effects/stagger.js';
 
 // eslint-disable-next-line no-undef
 const ANTI_FOUC_CSS = typeof __ANTI_FOUC_CSS__ !== 'undefined' ? __ANTI_FOUC_CSS__ : '';
@@ -22,6 +23,7 @@ function injectAntiFouc() {
 }
 
 function registerAll() {
+  boot.registerEffect(stagger); // MUST be before fade — tags children to skip fade
   boot.registerEffect(fade);
   boot.registerEffect(marquee);
   boot.registerEffect(hover);
