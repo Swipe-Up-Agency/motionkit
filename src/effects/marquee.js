@@ -29,14 +29,39 @@ export function init(element) {
   const reverse = element.classList.contains('mk-marquee-reverse');
   const pauseOnHover = element.classList.contains('mk-marquee-pause-hover');
 
-  const distance = track.scrollWidth / 2;
-  const fromX = reverse ? -distance : 0;
-  const toX = reverse ? 0 : -distance;
+  function build() {
+    const distance = track.scrollWidth / 2;
+    const fromX = reverse ? -distance : 0;
+    const toX = reverse ? 0 : -distance;
 
-  const tween = gsap.fromTo(track, { x: fromX }, { x: toX, duration: speed, ease: 'none', repeat: -1 });
+    const tween = gsap.fromTo(track, { x: fromX }, { x: toX, duration: speed, ease: 'none', repeat: -1 });
 
-  if (pauseOnHover) {
-    element.addEventListener('pointerenter', () => tween.pause());
-    element.addEventListener('pointerleave', () => tween.resume());
+    if (typeof IntersectionObserver !== 'undefined') {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) tween.resume();
+          else tween.pause();
+        }
+      });
+      io.observe(element);
+    }
+
+    const hasTrueHover = typeof window.matchMedia === 'function'
+      && window.matchMedia('(hover: hover)').matches;
+    if (pauseOnHover && hasTrueHover) {
+      element.addEventListener('pointerenter', () => tween.pause());
+      element.addEventListener('pointerleave', () => tween.resume());
+    }
+  }
+
+  const imgs = Array.from(track.querySelectorAll('img'));
+  const pending = imgs.filter((img) => !img.complete);
+  if (pending.length === 0) {
+    build();
+  } else {
+    Promise.all(pending.map((img) => new Promise((resolve) => {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    }))).then(build);
   }
 }

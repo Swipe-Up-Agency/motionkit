@@ -35,7 +35,7 @@ export const name = 'fade';
 export const classSelectors = Object.keys(VARIANTS);
 export const mobileDefault = 'run';
 
-export function init(element, options) {
+export function init(element, options = {}) {
   if (element.dataset.mkStaggerChild === 'true') return;
   const gsap = window.gsap;
   const ScrollTrigger = window.ScrollTrigger;
