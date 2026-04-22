@@ -17,17 +17,42 @@ export function registerEffect(descriptor) {
 export function getRegistry() { return registry; }
 export function getActiveEffects() { return active.slice(); }
 
-export function scan(root = document) {
+export function scan(root = document, cfg = null) {
   const matches = [];
+  const seen = new WeakSet();
+
+  // Pass 1: class-based matches
   for (const descriptor of registry.values()) {
     for (const cls of descriptor.classSelectors) {
       const nodes = root.querySelectorAll(`.${cls}`);
       for (const el of nodes) {
-        if (initialized.has(el)) continue;
+        if (initialized.has(el) || seen.has(el)) continue;
         matches.push({ element: el, descriptor, triggerClass: cls });
+        seen.add(el);
       }
     }
   }
+
+  // Pass 2: config.selectors-based matches — attaches effects to elements
+  // you can't class directly (e.g. Squarespace-generated markup).
+  const config = cfg ?? loadConfig();
+  if (config.selectors) {
+    for (const [sel, opts] of Object.entries(config.selectors)) {
+      const effectName = opts?.effect;
+      if (!effectName) continue;
+      const descriptor = registry.get(effectName);
+      if (!descriptor) continue;
+      let nodes;
+      try { nodes = root.querySelectorAll(sel); }
+      catch (_) { continue; } // invalid selector — skip silently
+      for (const el of nodes) {
+        if (initialized.has(el) || seen.has(el)) continue;
+        matches.push({ element: el, descriptor, triggerSelector: sel });
+        seen.add(el);
+      }
+    }
+  }
+
   return matches;
 }
 
@@ -35,7 +60,7 @@ export function run() {
   const cfg = loadConfig();
   if (isReducedMotion(cfg.reducedMotion)) {
     if (cfg.debug) console.log('[MotionKit] reduced-motion active; skipping animations.');
-    for (const { element } of scan()) {
+    for (const { element } of scan(document, cfg)) {
       element.classList.add('mk-ready');
       initialized.add(element);
     }
@@ -44,7 +69,7 @@ export function run() {
 
   const mobile = isMobile(cfg.breakpoints.mobile);
 
-  for (const { element, descriptor } of scan()) {
+  for (const { element, descriptor } of scan(document, cfg)) {
     const override = readMobileOverride(element);
     const shouldRun = resolveMobileBehavior({ mobileDefault: descriptor.mobileDefault, isMobile: mobile, override });
     if (!shouldRun) {

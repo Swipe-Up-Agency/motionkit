@@ -157,3 +157,89 @@ test('run() handles null breakpoints config without crashing', async ({ page }) 
   });
   expect(ok).toBe(true);
 });
+
+test('scan() finds elements via config.selectors and dispatches effects', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const result = await page.evaluate(() => {
+    window.mkClear();
+    window.mkBuild([
+      { id: 'hero', attrs: { 'data-section': 'hero' } },
+      { id: 'footer', attrs: { 'data-section': 'footer' } },
+    ]);
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: {
+        '[data-section="hero"]': { effect: 'dummy' },
+      },
+    });
+    const { boot } = window.MotionKit._internals;
+    const visited = [];
+    boot.registerEffect({
+      name: 'dummy', classSelectors: ['mk-dummy-neverused'], mobileDefault: 'run',
+      init: (el) => visited.push(el.id),
+    });
+    boot.run();
+    return visited;
+  });
+  expect(result).toEqual(['hero']);
+});
+
+test('scan() dedupes element matched by both class and selector', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const calls = await page.evaluate(() => {
+    window.mkClear();
+    window.mkBuild({ id: 'both', className: 'mk-dummy-dual', attrs: { 'data-x': '1' } });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { '[data-x="1"]': { effect: 'dummy2' } },
+    });
+    const { boot } = window.MotionKit._internals;
+    let n = 0;
+    boot.registerEffect({
+      name: 'dummy2', classSelectors: ['mk-dummy-dual'], mobileDefault: 'run',
+      init: () => { n += 1; },
+    });
+    boot.run();
+    return n;
+  });
+  expect(calls).toBe(1);
+});
+
+test('scan() ignores selectors with unknown effect names', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const ok = await page.evaluate(() => {
+    window.mkClear();
+    window.mkBuild({ id: 'lonely', attrs: { 'data-test': 'yes' } });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { '[data-test="yes"]': { effect: 'nonexistent' } },
+    });
+    try {
+      const { boot } = window.MotionKit._internals;
+      boot.run();
+      return true;
+    } catch (err) {
+      return String(err);
+    }
+  });
+  expect(ok).toBe(true);
+});
+
+test('scan() silently skips invalid CSS selectors', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const ok = await page.evaluate(() => {
+    window.mkClear();
+    window.mkBuild({ id: 'a' });
+    window.MotionKit = Object.assign(window.MotionKit || {}, {
+      selectors: { ':::garbage:::' : { effect: 'dummy3' } },
+    });
+    const { boot } = window.MotionKit._internals;
+    boot.registerEffect({
+      name: 'dummy3', classSelectors: ['mk-x'], mobileDefault: 'run', init: () => {},
+    });
+    try {
+      boot.run();
+      return true;
+    } catch (err) {
+      return String(err);
+    }
+  });
+  expect(ok).toBe(true);
+});
