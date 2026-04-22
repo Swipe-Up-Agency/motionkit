@@ -8,6 +8,7 @@ import * as marquee from './effects/marquee.js';
 import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
 import * as kenBurns from './effects/ken-burns.js';
+import * as pin from './effects/pin.js';
 
 // eslint-disable-next-line no-undef
 const ANTI_FOUC_CSS = typeof __ANTI_FOUC_CSS__ !== 'undefined' ? __ANTI_FOUC_CSS__ : '';
@@ -26,6 +27,7 @@ function registerAll() {
   boot.registerEffect(hover);
   boot.registerEffect(parallax);
   boot.registerEffect(kenBurns);
+  boot.registerEffect(pin);
 }
 
 (function init() {
