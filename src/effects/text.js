@@ -42,13 +42,14 @@ function wireSplit(gsap, SplitText, el) {
 }
 
 function wireTypewriter(gsap, ScrollTrigger, el) {
-  const full = el.textContent;
-  el.textContent = '';
   ScrollTrigger.create({
     trigger: el, start: 'top 80%', once: true,
     onEnter: () => {
+      const full = el.textContent;
+      el.textContent = '';
       let i = 0;
       const tick = () => {
+        if (!el.isConnected) return;
         if (i > full.length) return;
         el.textContent = full.slice(0, i);
         i += 1;

@@ -23,3 +23,19 @@ test('mk-text-split splits into words', async ({ page }) => {
   });
   expect(count).toBe(3);
 });
+
+test('mk-text-typewriter keeps text visible until scrolled into view', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const textBeforeScroll = await page.evaluate(() => {
+    window.mkClear();
+    // Build far below viewport so onEnter doesn't fire immediately
+    window.mkBuild({
+      tag: 'p', className: 'mk-text-typewriter', id: 't',
+      style: { marginTop: '400vh' },
+      text: 'Hello typewriter world',
+    });
+    window.MotionKit.refresh();
+    return document.getElementById('t').textContent;
+  });
+  expect(textBeforeScroll).toBe('Hello typewriter world');
+});

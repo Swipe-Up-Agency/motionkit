@@ -17,6 +17,7 @@ export function init(element) {
   const ScrollTrigger = window.ScrollTrigger;
   if (!gsap || !ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
+  if (element.querySelector('.mk-bg-layer')) return; // already initialized
 
   const sources = Array.from(element.querySelectorAll('.mk-bg-image'));
   if (!sources.length) return;

@@ -42,3 +42,24 @@ test('mk-bg-crossfade mobile fallback sets first image as background', async ({ 
   expect(r.layers).toBe(0);
   await ctx.close();
 });
+
+test('mk-bg-crossfade init is idempotent (no duplicate layers on re-init)', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const count = await page.evaluate(() => {
+    window.mkClear();
+    window.mkBuild({
+      tag: 'section', className: 'mk-bg-crossfade', id: 'bg', style: { position: 'relative' },
+      children: [
+        { className: 'mk-bg-image', attrs: { 'data-mk-bg': 'https://via.placeholder.com/400/111' } },
+        { className: 'mk-bg-image', attrs: { 'data-mk-bg': 'https://via.placeholder.com/400/222' } },
+      ],
+    });
+    window.MotionKit.refresh();
+    // Force a second init call on the same element via the internal boot
+    const { boot } = window.MotionKit._internals;
+    const desc = boot.getRegistry().get('bgCrossfade');
+    desc.init(document.getElementById('bg'));
+    return document.getElementById('bg').querySelectorAll('.mk-bg-layer').length;
+  });
+  expect(count).toBe(2);
+});
