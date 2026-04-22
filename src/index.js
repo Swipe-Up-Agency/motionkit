@@ -11,6 +11,7 @@ import * as parallax from './effects/parallax.js';
 import * as kenBurns from './effects/ken-burns.js';
 import * as pin from './effects/pin.js';
 import * as hscroll from './effects/hscroll.js';
+import * as bgCrossfade from './effects/bg-crossfade.js';
 import * as stagger from './effects/stagger.js';
 
 // eslint-disable-next-line no-undef
@@ -34,6 +35,7 @@ function registerAll() {
   boot.registerEffect(kenBurns);
   boot.registerEffect(pin);
   boot.registerEffect(hscroll);
+  boot.registerEffect(bgCrossfade);
 }
 
 (function init() {
