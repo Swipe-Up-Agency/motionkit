@@ -39,20 +39,22 @@ Squarespace 7.1 doesn't ship a native "add class name" UI on every block, so Mot
 
 #### Path A — `config.selectors` map (recommended)
 
-In the same Code Injection header, right after the MotionKit script tag, declare a config block that maps Squarespace's native selectors to effects:
+In the same Code Injection header, right after the MotionKit script tag, declare a config block that maps Squarespace's native selectors to effects. **Use `Object.assign` — never `window.MotionKit = { ... }`** (see note below):
 
 ```html
 <script>
-  window.MotionKit = {
+  window.MotionKit = Object.assign(window.MotionKit || {}, {
     selectors: {
       '[data-section-id="hero"]': { effect: 'parallax', intensity: 0.3 },
       '[data-section-id="hero"] h1': { effect: 'text' },
       '[data-section-id="gallery"] img': { effect: 'kenBurns' },
       '.sqs-block-image img': { effect: 'fade' },
     },
-  };
+  });
 </script>
 ```
+
+> ⚠️ **Important**: always use `Object.assign(window.MotionKit || {}, {...})` rather than `window.MotionKit = {...}`. The library attaches its `refresh`, `getRegistry`, and internal state as properties on `window.MotionKit` during boot. A plain `window.MotionKit = {...}` assignment after the library has loaded will replace the whole object and wipe out those methods. `Object.assign` extends instead of replacing, so both your config and the library coexist regardless of script order.
 
 To find a selector for a Squarespace element, open the site in Chrome DevTools → Elements panel → right-click → Copy → Copy selector. Sections expose `[data-section-id]` natively; you can also set a Section ID in the section's Settings → Advanced for a cleaner selector.
 
@@ -131,16 +133,16 @@ Each effect is a class you add to a block. Full options and class modifiers are 
 
 ## Configuration
 
-Configuration is optional. Defaults are tuned to feel right on Squarespace. To override, set `window.MotionKit` **before** the `motion-kit.min.js` script tag:
+Configuration is optional. Defaults are tuned to feel right on Squarespace. To override, use `Object.assign` so you extend `window.MotionKit` without wiping out the library's own methods (see the warning in Step 3 above). The config block can go either before or after the `motion-kit.min.js` script tag — `Object.assign` handles both orders:
 
 ```html
 <script>
-  window.MotionKit = {
+  window.MotionKit = Object.assign(window.MotionKit || {}, {
     defaults: { duration: 700, easing: 'power2.out' },
     effects: { parallax: { intensity: 0.3 } },
     breakpoints: { mobile: 768 },
     debug: false,
-  };
+  });
 </script>
 ```
 
