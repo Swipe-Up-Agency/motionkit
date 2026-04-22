@@ -16,7 +16,7 @@ function deepMerge(base, overlay) {
     if (BLOCKED_KEYS.has(key)) continue;
     const a = base?.[key];
     const b = overlay[key];
-    if (b === undefined) continue;
+    if (b === undefined || b === null) continue; // skip unset / explicit-null
     if (b && typeof b === 'object' && !Array.isArray(b)) {
       out[key] = deepMerge(a && typeof a === 'object' ? a : {}, b);
     } else {

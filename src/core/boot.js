@@ -67,9 +67,16 @@ export function run() {
       if (cfg.debug) console.log(`[MotionKit] ${descriptor.name}: initialized`, element);
     } catch (err) {
       element.classList.add('mk-ready');
+      initialized.add(element); // prevent retry storm on deterministic failures
       console.error(`[MotionKit] ${descriptor.name}: init failed`, err, element);
     }
   }
 }
 
-export function refresh() { run(); }
+export function refresh() {
+  // Prune entries for elements no longer connected to the DOM.
+  for (let i = active.length - 1; i >= 0; i--) {
+    if (!active[i].element.isConnected) active.splice(i, 1);
+  }
+  run();
+}
