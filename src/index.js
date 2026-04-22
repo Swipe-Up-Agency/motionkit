@@ -4,6 +4,7 @@ import * as breakpoints from './core/breakpoints.js';
 import * as config from './core/config.js';
 import * as boot from './core/boot.js';
 import * as fade from './effects/fade.js';
+import * as text from './effects/text.js';
 import * as marquee from './effects/marquee.js';
 import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
@@ -25,6 +26,7 @@ function injectAntiFouc() {
 function registerAll() {
   boot.registerEffect(stagger); // MUST be before fade — tags children to skip fade
   boot.registerEffect(fade);
+  boot.registerEffect(text);
   boot.registerEffect(marquee);
   boot.registerEffect(hover);
   boot.registerEffect(parallax);
