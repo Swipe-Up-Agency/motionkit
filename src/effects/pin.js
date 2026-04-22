@@ -19,8 +19,9 @@ export function init(element) {
   ScrollTrigger.create({
     trigger: element,
     start: 'top top',
-    end: `+=${vh * 100}%`,
+    end: `+=${vh * 100}vh`,
     pin: true,
     pinSpacing: true,
+    anticipatePin: 1, // prevents visible jump when pin engages
   });
 }

@@ -28,6 +28,7 @@ export function init(element) {
   const mode = readMode(element);
   const from = {}, to = {};
   if (mode === 'zoom' || mode === 'both') { from.scale = 1; to.scale = 1 + intensity; }
+  if (mode === 'pan') { from.scale = 1.05; to.scale = 1.05; } // provides headroom so pan doesn't expose container edges
   if (mode === 'pan' || mode === 'both') { from.xPercent = -intensity * 30; to.xPercent = intensity * 30; }
 
   gsap.fromTo(element, from, {
