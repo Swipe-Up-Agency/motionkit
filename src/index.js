@@ -15,6 +15,10 @@ function injectAntiFouc() {
   document.head.appendChild(style);
 }
 
+function registerAll() {
+  // Effects register here; added in Phase 3+.
+}
+
 (function init() {
   if (typeof window === 'undefined') return;
   if (window.MotionKit?.version && window.MotionKit.__booted__) return; // bundle already loaded
@@ -28,6 +32,7 @@ function injectAntiFouc() {
     _internals: { tokens, reducedMotion, breakpoints, config, boot },
   });
   injectAntiFouc();
+  registerAll();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot.run, { once: true });
