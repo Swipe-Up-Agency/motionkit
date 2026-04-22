@@ -4,6 +4,23 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-04-22
+
+### Fixed
+
+- `config.selectors` now actually dispatches effects to matching elements, not just modifies options on already-classed elements. Previously the spec documented this behavior but `scan()` only found elements by `mk-*` classes.
+
+### Added
+
+- `scan()` takes an optional `cfg` parameter so `run()` can reuse its already-loaded config.
+- Invalid CSS selectors in `config.selectors` are now silently skipped (previously would throw).
+- Unknown effect names in `config.selectors` are silently ignored.
+- 4 new tests covering selector-based attachment, class+selector deduplication, unknown-effect handling, and invalid-selector handling.
+
+### Docs
+
+- README's install section now documents three real attach-to-element paths: `config.selectors` map (recommended), Code Blocks, and bootstrap JS. The v1.0.0 docs incorrectly assumed Squarespace had a universal "Add class name" UI (that's a Spark Plugin feature).
+
 ## [1.0.0] — 2026-04-22
 
 ### Added

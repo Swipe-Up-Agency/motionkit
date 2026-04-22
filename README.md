@@ -33,9 +33,64 @@ jsDelivr serves straight from the tagged Git release — no npm publish needed. 
 
 Pin to `@v1.0.0` on live client sites. The tag never changes, so clients never get surprise updates.
 
-**Step 3 — Add effect classes in block settings**
+**Step 3 — Attach effects to elements**
 
-In the editor, open any block, click **Design → Add class name**, and type an effect class such as `mk-fade-up` or `mk-parallax mk-med`. Save and reload. That's it.
+Squarespace 7.1 doesn't ship a native "add class name" UI on every block, so MotionKit supports three ways to attach an effect to an element. Pick whichever fits the block type you're working with.
+
+#### Path A — `config.selectors` map (recommended)
+
+In the same Code Injection header, right after the MotionKit script tag, declare a config block that maps Squarespace's native selectors to effects:
+
+```html
+<script>
+  window.MotionKit = {
+    selectors: {
+      '[data-section-id="hero"]': { effect: 'parallax', intensity: 0.3 },
+      '[data-section-id="hero"] h1': { effect: 'text' },
+      '[data-section-id="gallery"] img': { effect: 'kenBurns' },
+      '.sqs-block-image img': { effect: 'fade' },
+    },
+  };
+</script>
+```
+
+To find a selector for a Squarespace element, open the site in Chrome DevTools → Elements panel → right-click → Copy → Copy selector. Sections expose `[data-section-id]` natively; you can also set a Section ID in the section's Settings → Advanced for a cleaner selector.
+
+The `effect` key names the effect module (`fade`, `text`, `parallax`, `marquee`, `hover`, `kenBurns`, `pin`, `hscroll`, `bgCrossfade`, `stagger`). Any other keys on the entry become effect options.
+
+This is the cleanest path for an agency workflow — one config block covers the whole site, no per-block tagging needed.
+
+#### Path B — Code Blocks for custom HTML
+
+For blocks where you control the markup (Code Blocks in Squarespace's layout editor), write HTML with the `mk-*` class directly:
+
+```html
+<div class="mk-fade-up mk-duration-slow">
+  <h2>Custom headline</h2>
+  <p>Pasted into a Code Block, this reveals on scroll.</p>
+</div>
+```
+
+Use this when you need exact markup control or when the effect requires specific structure (fixed-background crossfade and horizontal scroll pin both require a Code Block because their markup contract doesn't fit native Squarespace blocks).
+
+#### Path C — Bootstrap JS for one-off tagging
+
+If a single element needs tagging and you'd rather not add it to the global config, drop a tiny script in the Footer Code Injection:
+
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('[data-section-id="abc123"] h1')?.classList.add('mk-text-reveal');
+    window.MotionKit?.refresh?.();
+  });
+</script>
+```
+
+The `refresh()` call re-scans the DOM after your manual tagging.
+
+#### Spark Plugin compatibility
+
+If you're running Spark Plugin (or SquareKicker, Refresher, etc.) on the site, their "Add class name" UI on every block is compatible with MotionKit — just type `mk-fade-up` (or any other `mk-*` class) in their field. MotionKit's class scanner doesn't care who added the class.
 
 ### Quick examples
 
