@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('MotionKit global is exposed', async ({ page }) => {
   await page.goto('/tests/fixtures/harness.html');
   const version = await page.evaluate(() => window.MotionKit?.version);
-  expect(version).toBe('1.4.1');
+  expect(version).toBe('1.4.2');
 });
 
 test('GSAP and ScrollTrigger are loaded', async ({ page }) => {

@@ -4,6 +4,16 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.2] — 2026-04-22
+
+### Fixed
+
+- Mosaic: visual artifact ("hashed" appearance, apparent mid-scroll pop) on columns whose speed exceeds 1. Auto-scales duplication factor based on max speed so the full motion fits without crossing a wrap boundary. Speeds ≤ 1 continue to use 2 copies (no regression); speeds > 1 use enough copies to keep motion continuous.
+
+### Added
+
+- 1 new test verifying that higher speeds produce more duplicated content per column.
+
 ## [1.4.1] — 2026-04-22
 
 ### Added
