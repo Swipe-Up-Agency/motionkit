@@ -2,7 +2,7 @@
 
 Class-driven animation library for Squarespace 7.1 sites, built on GSAP + ScrollTrigger.
 
-Add a class name, get an animation. No code required in the page — everything is driven by a single DOM scan on load. 10 effects, ~5.5 KB gzipped, respects `prefers-reduced-motion`, and degrades gracefully on mobile.
+Add a class name, get an animation. No code required in the page — everything is driven by a single DOM scan on load. 11 effects, ~5.5 KB gzipped, respects `prefers-reduced-motion`, and degrades gracefully on mobile.
 
 ## Install on a Squarespace site
 
@@ -22,16 +22,16 @@ In the Squarespace admin, go to **Settings → Advanced → Code Injection → H
 <script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.2.0/dist/motion-kit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.3.0/dist/motion-kit.min.js"></script>
 ```
 
 jsDelivr serves straight from the tagged Git release — no npm publish needed. Path segments:
 
 - `/gh/Swipe-Up-Agency/` — GitHub org (hosts the repo)
-- `/motionkit@v1.2.0/` — repo name + release tag (immutable once tagged)
+- `/motionkit@v1.3.0/` — repo name + release tag (immutable once tagged)
 - `/dist/motion-kit.min.js` — the committed bundle artifact
 
-Pin to `@v1.2.0` on live client sites. The tag never changes, so clients never get surprise updates.
+Pin to `@v1.3.0` on live client sites. The tag never changes, so clients never get surprise updates.
 
 **Step 3 — Attach effects to elements**
 
@@ -131,6 +131,7 @@ Each effect is a class you add to a block. Full options and class modifiers are 
 
 - **Scroll reveal** — fade/slide/scale blocks in as they enter the viewport. See [docs/effects/fade.md](docs/effects/fade.md).
 - **Text animations** — reveal, split, or typewriter effects on headings and paragraphs. See [docs/effects/text.md](docs/effects/text.md).
+- **Counter** — animate a number from one value to another on scroll-in (stats, KPIs, social proof). See [docs/effects/counter.md](docs/effects/counter.md).
 - **Hover interactions** — magnetic, zoom, and tilt responses on pointer devices. See [docs/effects/hover.md](docs/effects/hover.md).
 - **Marquee** — infinite horizontal ticker with speed, reverse, and pause-on-hover. See [docs/effects/marquee.md](docs/effects/marquee.md).
 - **Parallax** — background-position shift on scroll with three intensity levels. See [docs/effects/parallax.md](docs/effects/parallax.md).

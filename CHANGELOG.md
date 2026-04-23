@@ -4,6 +4,19 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] — 2026-04-22
+
+### Added
+
+- New **Counter** effect (`mk-counter`) — animates any text element from a starting number to a target number when scrolled into view. Configurable via data attributes: `data-mk-count-to`, `data-mk-count-from`, `data-mk-count-duration`, `data-mk-count-decimals`, `data-mk-count-separator`, `data-mk-count-prefix`, `data-mk-count-suffix`. Supports any numeric format — percentages, currency, large numbers with thousands separators.
+- 5 new tests covering counter initial state, animation-to-target, prefix/suffix, thousands-separator formatting, and reduced-motion short-circuit.
+- Per-effect documentation at `docs/effects/counter.md`.
+
+### Changed
+
+- Total effect count: 10 → 11.
+- `registerAll()` in `src/index.js` now registers `counter` after `text` (alphabetical ordering within the animation category).
+
 ## [1.2.0] — 2026-04-22
 
 ### Added
