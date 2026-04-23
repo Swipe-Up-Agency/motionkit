@@ -4,6 +4,17 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.3] — 2026-04-22
+
+### Fixed
+
+- Mosaic: render stutter ("bumpy" feel) on DOWN columns during scroll. Direct `track.style.transform` writes bypassed GSAP's frame-batched render queue, causing out-of-sync repaints. Now uses `gsap.set` with `force3D: true`, routing transform updates through rAF and ensuring each column has its own GPU compositing layer.
+
+### Changed
+
+- Scrub value reduced from `0.5` → `0.2` for tighter, less-smoothed scroll response. Smoothing is still present but doesn't interpolate enough frames to introduce noticeable stutter.
+- Track elements now have `backfaceVisibility: hidden` and an initial `translate3d(0,0,0)` to promote to stable GPU layers from boot.
+
 ## [1.4.2] — 2026-04-22
 
 ### Fixed

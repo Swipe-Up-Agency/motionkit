@@ -47,7 +47,7 @@ function registerAll() {
   if (window.MotionKit?.version && window.MotionKit.__booted__) return; // bundle already loaded
   const existing = window.MotionKit || {};
   window.MotionKit = Object.assign(existing, {
-    version: '1.4.2',
+    version: '1.4.3',
     __booted__: true,
     refresh: boot.refresh,
     getRegistry: boot.getRegistry,
