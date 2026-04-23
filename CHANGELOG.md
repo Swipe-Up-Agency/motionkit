@@ -4,6 +4,17 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] — 2026-04-22
+
+### Added
+
+- Mosaic effect now supports per-direction speed attributes: `data-mk-speed-up` and `data-mk-speed-down`. Both default to `data-mk-speed` (or 1 if unset). Lets odd (up) and even (down) columns scroll at different rates for a more organic, less mechanical feel.
+- 1 new test verifying that DOWN-moving columns with a higher speed-down attribute translate further than UP-moving columns with a lower speed-up attribute.
+
+### Changed
+
+- None — fully backward-compatible. Existing `data-mk-speed` usage continues to work identically.
+
 ## [1.4.0] — 2026-04-22
 
 ### Added

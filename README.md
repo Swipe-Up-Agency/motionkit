@@ -22,16 +22,16 @@ In the Squarespace admin, go to **Settings → Advanced → Code Injection → H
 <script src="https://unpkg.com/gsap@3.13/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/gsap@3.13/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.4.0/dist/motion-kit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Swipe-Up-Agency/motionkit@v1.4.1/dist/motion-kit.min.js"></script>
 ```
 
 jsDelivr serves straight from the tagged Git release — no npm publish needed. Path segments:
 
 - `/gh/Swipe-Up-Agency/` — GitHub org (hosts the repo)
-- `/motionkit@v1.4.0/` — repo name + release tag (immutable once tagged)
+- `/motionkit@v1.4.1/` — repo name + release tag (immutable once tagged)
 - `/dist/motion-kit.min.js` — the committed bundle artifact
 
-Pin to `@v1.4.0` on live client sites. The tag never changes, so clients never get surprise updates.
+Pin to `@v1.4.1` on live client sites. The tag never changes, so clients never get surprise updates.
 
 **Step 3 — Attach effects to elements**
 
