@@ -55,6 +55,8 @@ export function init(element, options = {}) {
     track.style.flexDirection = 'column';
     track.style.gap = `${gap}px`;
     track.style.willChange = 'transform';
+    track.style.backfaceVisibility = 'hidden';
+    track.style.transform = 'translate3d(0,0,0)'; // promotes to its own GPU layer early
 
     // Distribute items round-robin into this column
     for (let i = colIndex; i < items.length; i += numColumns) {
@@ -88,7 +90,7 @@ export function init(element, options = {}) {
         trigger: element,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 0.5,
+        scrub: 0.2,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           // For DOWN columns: reverse progress so content appears to move down
@@ -96,7 +98,9 @@ export function init(element, options = {}) {
           const effective = isDownCol ? 1 - self.progress : self.progress;
           const columnSpeed = isDownCol ? speedDown : speedUp;
           const y = -effective * contentHeight * columnSpeed;
-          track.style.transform = `translateY(${wrap(y)}px)`;
+          // Use gsap.set (frame-batched, GPU-composited) instead of direct style writes
+          // to avoid render stutter when scrub interpolates progress rapidly.
+          gsap.set(track, { y: wrap(y), force3D: true });
         },
       });
     });

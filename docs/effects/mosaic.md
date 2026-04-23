@@ -63,6 +63,12 @@ The trade-off is bundle-time negligible (cloning is fast) but DOM size doubles p
 
 Each column creates one ScrollTrigger instance with `scrub: 0.5`. For wide mosaics with many columns (e.g., 8+), expect a small perf cost. GSAP's shared ticker handles this well on modern hardware.
 
+## Rendering notes
+
+The mosaic effect writes transforms via `gsap.set` with `force3D: true` so the browser promotes each column to its own GPU layer. Combined with `backface-visibility: hidden` and an initial `translate3d(0,0,0)` on each track, this eliminates sub-pixel rendering artifacts and keeps the motion smooth during rapid scrolling.
+
+If you're seeing residual stutter on very long pages or with heavy image payloads, compress images to under ~200 KB each and consider reducing the number of visible images per column (e.g., 4–6 per column rather than 8+).
+
 ## Example
 
 ```html
