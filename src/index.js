@@ -5,6 +5,7 @@ import * as config from './core/config.js';
 import * as boot from './core/boot.js';
 import * as fade from './effects/fade.js';
 import * as text from './effects/text.js';
+import * as counter from './effects/counter.js';
 import * as marquee from './effects/marquee.js';
 import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
@@ -29,6 +30,7 @@ function registerAll() {
   boot.registerEffect(stagger); // MUST be before fade — tags children to skip fade
   boot.registerEffect(fade);
   boot.registerEffect(text);
+  boot.registerEffect(counter);
   boot.registerEffect(marquee);
   boot.registerEffect(hover);
   boot.registerEffect(parallax);
@@ -43,7 +45,7 @@ function registerAll() {
   if (window.MotionKit?.version && window.MotionKit.__booted__) return; // bundle already loaded
   const existing = window.MotionKit || {};
   window.MotionKit = Object.assign(existing, {
-    version: '1.2.0',
+    version: '1.3.0',
     __booted__: true,
     refresh: boot.refresh,
     getRegistry: boot.getRegistry,
