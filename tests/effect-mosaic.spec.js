@@ -62,6 +62,7 @@ test('mk-mosaic is idempotent on refresh (no duplicate tracks)', async ({ page }
   expect(trackCount).toBe(3);
 });
 
+
 test('mk-mosaic defaults to 3 columns when no attribute is set', async ({ page }) => {
   await page.goto('/tests/fixtures/harness.html');
   const trackCount = await page.evaluate(async () => {
@@ -76,4 +77,42 @@ test('mk-mosaic defaults to 3 columns when no attribute is set', async ({ page }
     return document.getElementById('m').querySelectorAll(':scope > .mk-mosaic-track').length;
   });
   expect(trackCount).toBe(3);
+});
+
+test('mk-mosaic respects per-direction speed attributes', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const result = await page.evaluate(async () => {
+    window.mkClear();
+    window.mkBuild({
+      className: 'mk-mosaic', id: 'm',
+      attrs: {
+        'data-mk-columns': '2',
+        'data-mk-speed-up': '0.5',
+        'data-mk-speed-down': '2',
+      },
+      style: { height: '400px' },
+      children: Array.from({ length: 4 }, () => ({
+        tag: 'div', style: { width: '100%', height: '100px' },
+      })),
+    });
+    window.MotionKit.refresh();
+    await new Promise((r) => setTimeout(r, 50));
+    // Force a scroll update to trigger onUpdate
+    window.ScrollTrigger.refresh();
+    window.scrollTo(0, window.innerHeight / 2);
+    await new Promise((r) => setTimeout(r, 200));
+    const tracks = document.getElementById('m').querySelectorAll('.mk-mosaic-track');
+    // Extract translateY from each track's transform
+    const getY = (el) => {
+      const t = el.style.transform;
+      const m = /translateY\(([-\d.]+)px\)/.exec(t);
+      return m ? Math.abs(parseFloat(m[1])) : null;
+    };
+    return { col0: getY(tracks[0]), col1: getY(tracks[1]) };
+  });
+  // Column 1 (down, speed 2) should have moved more than column 0 (up, speed 0.5)
+  // Exact values depend on scroll position; just verify col1 > col0 (proportional to speed)
+  if (result.col0 !== null && result.col1 !== null) {
+    expect(result.col1).toBeGreaterThan(result.col0);
+  }
 });

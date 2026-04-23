@@ -12,7 +12,23 @@ Creates a multi-column vertical scroll mosaic where each column translates with 
 |---|---|---|
 | `data-mk-columns` | `3` | Number of columns |
 | `data-mk-gap` | `12` | Gap between images in pixels (applied to both grid and column flex-gap) |
-| `data-mk-speed` | `1` | Scroll-to-motion multiplier. `0.5` = slower, `2` = faster |
+| `data-mk-speed` | `1` | Base scroll-to-motion multiplier (applies to both directions unless overridden) |
+| `data-mk-speed-up` | inherits `data-mk-speed` | Speed for UP-moving columns (odd-indexed columns) |
+| `data-mk-speed-down` | inherits `data-mk-speed` | Speed for DOWN-moving columns (even-indexed columns) |
+
+### Different speeds per direction
+
+Odd (up) and even (down) columns can scroll at different rates. Common patterns:
+
+```html
+<!-- Subtle: down columns slightly faster -->
+<div class="mk-mosaic" data-mk-speed-up="0.9" data-mk-speed-down="1.1">...</div>
+
+<!-- Dramatic: down columns much faster -->
+<div class="mk-mosaic" data-mk-speed-up="0.6" data-mk-speed-down="1.4">...</div>
+```
+
+This asymmetry creates a subtle "drift" feeling — the mosaic feels less mechanical and more organic. Keep the difference small (±10-20%) for a natural feel, or push wider for a more stylized effect.
 
 ## Markup contract
 

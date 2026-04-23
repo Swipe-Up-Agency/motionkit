@@ -28,6 +28,8 @@ export function init(element, options = {}) {
   const numColumns = Math.max(1, Number(element.dataset.mkColumns ?? options.columns ?? 3));
   const gap = Number(element.dataset.mkGap ?? options.gap ?? 12);
   const speed = Number(element.dataset.mkSpeed ?? options.speed ?? 1);
+  const speedUp = Number(element.dataset.mkSpeedUp ?? options.speedUp ?? speed);
+  const speedDown = Number(element.dataset.mkSpeedDown ?? options.speedDown ?? speed);
 
   const items = Array.from(element.children);
   if (!items.length) return;
@@ -83,7 +85,8 @@ export function init(element, options = {}) {
           // For DOWN columns: reverse progress so content appears to move down
           // as scroll increases. On scroll-up, this naturally reverses too.
           const effective = isDownCol ? 1 - self.progress : self.progress;
-          const y = -effective * contentHeight * speed;
+          const columnSpeed = isDownCol ? speedDown : speedUp;
+          const y = -effective * contentHeight * columnSpeed;
           track.style.transform = `translateY(${wrap(y)}px)`;
         },
       });
