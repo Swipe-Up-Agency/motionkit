@@ -7,6 +7,7 @@ import * as fade from './effects/fade.js';
 import * as text from './effects/text.js';
 import * as counter from './effects/counter.js';
 import * as marquee from './effects/marquee.js';
+import * as mosaic from './effects/mosaic.js';
 import * as hover from './effects/hover.js';
 import * as parallax from './effects/parallax.js';
 import * as kenBurns from './effects/ken-burns.js';
@@ -32,6 +33,7 @@ function registerAll() {
   boot.registerEffect(text);
   boot.registerEffect(counter);
   boot.registerEffect(marquee);
+  boot.registerEffect(mosaic);
   boot.registerEffect(hover);
   boot.registerEffect(parallax);
   boot.registerEffect(kenBurns);
@@ -45,7 +47,7 @@ function registerAll() {
   if (window.MotionKit?.version && window.MotionKit.__booted__) return; // bundle already loaded
   const existing = window.MotionKit || {};
   window.MotionKit = Object.assign(existing, {
-    version: '1.3.0',
+    version: '1.4.0',
     __booted__: true,
     refresh: boot.refresh,
     getRegistry: boot.getRegistry,
