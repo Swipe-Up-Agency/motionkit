@@ -116,3 +116,29 @@ test('mk-mosaic respects per-direction speed attributes', async ({ page }) => {
     expect(result.col1).toBeGreaterThan(result.col0);
   }
 });
+
+test('mk-mosaic scales duplication when speed exceeds 1', async ({ page }) => {
+  await page.goto('/tests/fixtures/harness.html');
+  const counts = await page.evaluate(async () => {
+    window.mkClear();
+    window.mkBuild({
+      className: 'mk-mosaic', id: 'm',
+      attrs: {
+        'data-mk-columns': '2',
+        'data-mk-speed-down': '1.5',
+      },
+      style: { height: '400px' },
+      // 4 items → 2 per column
+      children: Array.from({ length: 4 }, () => ({
+        tag: 'div', style: { width: '100%', height: '100px' },
+      })),
+    });
+    window.MotionKit.refresh();
+    await new Promise((r) => setTimeout(r, 50));
+    const tracks = document.getElementById('m').querySelectorAll('.mk-mosaic-track');
+    // With speed-down = 1.5, ceil = 2, numCopies = 2 + 1 = 3.
+    // 2 items per column × 3 copies = 6 items per track.
+    return Array.from(tracks).map((t) => t.children.length);
+  });
+  expect(counts).toEqual([6, 6]);
+});

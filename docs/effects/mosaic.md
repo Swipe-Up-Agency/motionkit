@@ -51,6 +51,14 @@ Runs by default. Columns on mobile can look crowded — consider using a smaller
 
 The effect waits for all child `<img>` tags to load before measuring column heights. This prevents the classic "mosaic snaps after images load" glitch.
 
+## High speeds (> 1) — automatic duplication
+
+If either `data-mk-speed-up` or `data-mk-speed-down` exceeds 1, MotionKit automatically duplicates each column's content enough times to provide a smooth, wrap-free scroll range. For speeds between 1 and 2, each column gets 3 copies (originals + 2 clones). For speeds between 2 and 3, 4 copies. And so on.
+
+This prevents visual artifacts ("hashing" or apparent pops mid-scroll) that would otherwise occur when `scrub` smoothing tweens across a wrap boundary.
+
+The trade-off is bundle-time negligible (cloning is fast) but DOM size doubles per integer speed increase. For typical agency use (speeds 0.5–2), the impact is unnoticeable.
+
 ## Performance
 
 Each column creates one ScrollTrigger instance with `scrub: 0.5`. For wide mosaics with many columns (e.g., 8+), expect a small perf cost. GSAP's shared ticker handles this well on modern hardware.

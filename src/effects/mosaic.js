@@ -31,6 +31,11 @@ export function init(element, options = {}) {
   const speedUp = Number(element.dataset.mkSpeedUp ?? options.speedUp ?? speed);
   const speedDown = Number(element.dataset.mkSpeedDown ?? options.speedDown ?? speed);
 
+  // Duplicate content enough so the full scroll motion fits without hitting wrap boundaries.
+  // For speeds ≤ 1, 2 copies (original + 1 duplicate) is enough. For higher speeds, add more.
+  const maxSpeed = Math.max(speedUp, speedDown, 1);
+  const numCopies = Math.max(2, Math.ceil(maxSpeed) + 1);
+
   const items = Array.from(element.children);
   if (!items.length) return;
 
@@ -55,9 +60,11 @@ export function init(element, options = {}) {
     for (let i = colIndex; i < items.length; i += numColumns) {
       track.appendChild(items[i]);
     }
-    // Duplicate for seamless loop
+    // Duplicate (numCopies - 1) times to give enough runway for the wrap
     const originals = Array.from(track.children);
-    for (const node of originals) track.appendChild(node.cloneNode(true));
+    for (let c = 1; c < numCopies; c++) {
+      for (const node of originals) track.appendChild(node.cloneNode(true));
+    }
 
     element.appendChild(track);
     tracks.push(track);
@@ -70,10 +77,12 @@ export function init(element, options = {}) {
       const isDownCol = colIndex % 2 === 1;
       // Measure after images have loaded; scrollHeight is 2× content height
       const trackHeight = track.scrollHeight;
-      const contentHeight = trackHeight / 2;
+      const contentHeight = trackHeight / numCopies;
       if (contentHeight <= 0) return;
 
-      const wrap = gsap.utils.wrap(-contentHeight, 0);
+      // Wrap range extends over (numCopies - 1) × contentHeight so motion fits without wrapping
+      // for speeds up to (numCopies - 1), which is always at least 1.
+      const wrap = gsap.utils.wrap(-(numCopies - 1) * contentHeight, 0);
 
       ScrollTrigger.create({
         trigger: element,
