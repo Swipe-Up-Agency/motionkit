@@ -4,6 +4,19 @@ All notable changes to MotionKit are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] — 2026-04-22
+
+### Added
+
+- New **Mosaic** effect (`mk-mosaic`) — creates a multi-column vertical scroll mosaic where odd columns move up and even columns move down as the user scrolls, with seamless infinite looping (no blank gaps). Configurable via data attributes: `data-mk-columns`, `data-mk-gap`, `data-mk-speed`. Waits for images to load before measuring to prevent layout snapping.
+- 4 new tests covering column distribution, item duplication, idempotent init, and column-count default.
+- Per-effect documentation at `docs/effects/mosaic.md`.
+
+### Changed
+
+- Total effect count: 11 → 12.
+- `registerAll()` registers `mosaic` after `marquee`.
+
 ## [1.3.0] — 2026-04-22
 
 ### Added
